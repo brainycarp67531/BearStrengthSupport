@@ -33,6 +33,7 @@
       border-bottom: 1px solid var(--border);
       padding: 40px 24px 32px;
       text-align: center;
+      position: relative;
     }
 
     header .bear { font-size: 56px; margin-bottom: 12px; }
@@ -49,6 +50,35 @@
       color: var(--muted);
       margin-top: 8px;
       font-size: 1rem;
+    }
+
+    /* Language toggle */
+    .lang-toggle {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      display: flex;
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      border-radius: 24px;
+      overflow: hidden;
+    }
+
+    .lang-btn {
+      padding: 6px 14px;
+      font-size: 0.82rem;
+      font-weight: 600;
+      cursor: pointer;
+      border: none;
+      background: transparent;
+      color: var(--muted);
+      letter-spacing: 0.5px;
+      transition: all 0.15s;
+    }
+
+    .lang-btn.active {
+      background: var(--accent);
+      color: #fff;
     }
 
     nav {
@@ -228,6 +258,7 @@
 
     @media (max-width: 540px) {
       .grid-2 { grid-template-columns: 1fr; }
+      .lang-toggle { top: 12px; right: 12px; }
     }
 
     .stat-card {
@@ -274,21 +305,36 @@
       align-items: center;
       gap: 6px;
     }
+
+    /* Language visibility */
+    [data-lang] { display: none; }
+    body.lang-en [data-lang="en"] { display: revert; }
+    body.lang-sv [data-lang="sv"] { display: revert; }
+
+    /* Inline spans (used inside mixed elements) */
+    span[data-lang] { display: none; }
+    body.lang-en span[data-lang="en"] { display: inline; }
+    body.lang-sv span[data-lang="sv"] { display: inline; }
   </style>
 </head>
-<body>
+<body class="lang-en">
 
 <header>
+  <div class="lang-toggle">
+    <button class="lang-btn active" id="btn-en" onclick="setLang('en')">EN</button>
+    <button class="lang-btn" id="btn-sv" onclick="setLang('sv')">SV</button>
+  </div>
   <div class="bear">🐻</div>
   <h1>Bear<span>Strength</span></h1>
-  <p>Your simple, no-nonsense strength training tracker</p>
+  <p data-lang="en">Your simple, no-nonsense strength training tracker</p>
+  <p data-lang="sv">Din enkla och raka styrketräningstrackerss</p>
 </header>
 
 <nav>
-  <a href="#exercises">Exercises</a>
-  <a href="#templates">Templates</a>
-  <a href="#workout">Workout</a>
-  <a href="#history">History</a>
+  <a href="#exercises"><span data-lang="en">Exercises</span><span data-lang="sv">Övningar</span></a>
+  <a href="#templates"><span data-lang="en">Templates</span><span data-lang="sv">Mallar</span></a>
+  <a href="#workout"><span data-lang="en">Workout</span><span data-lang="sv">Träning</span></a>
+  <a href="#history"><span data-lang="en">History</span><span data-lang="sv">Historik</span></a>
   <a href="#stats">Stats</a>
   <a href="#tips">Tips</a>
 </nav>
@@ -299,18 +345,20 @@
   <section class="section" id="overview">
     <div class="section-header">
       <span class="icon">📱</span>
-      <h2>App Overview</h2>
+      <h2 data-lang="en">App Overview</h2>
+      <h2 data-lang="sv">Appöversikt</h2>
     </div>
     <div class="card">
-      <p>BearStrength is built around a simple three-step workflow: <strong>build your exercise library</strong>, <strong>create workout templates</strong>, and <strong>log your sessions</strong>. Everything else — history, progress data, and stats — is generated automatically.</p>
+      <p data-lang="en">BearStrength is built around a simple three-step workflow: <strong>build your exercise library</strong>, <strong>create workout templates</strong>, and <strong>log your sessions</strong>. Everything else — history, progress data, and stats — is generated automatically.</p>
+      <p data-lang="sv">BearStrength bygger på ett enkelt trestegsflöde: <strong>bygg ditt övningsbibliotek</strong>, <strong>skapa träningsmallar</strong> och <strong>logga dina pass</strong>. Allt annat — historik, progressionsdata och statistik — genereras automatiskt.</p>
       <div class="tab-row">
-        <div class="tab-chip">🏠 Home</div>
-        <div class="tab-chip">🏋️ Workouts</div>
-        <div class="tab-chip">📋 Templates</div>
-        <div class="tab-chip">💪 Exercises</div>
-        <div class="tab-chip">📅 History</div>
+        <div class="tab-chip">🏠 <span data-lang="en">Home</span><span data-lang="sv">Hem</span></div>
+        <div class="tab-chip">🏋️ <span data-lang="en">Workouts</span><span data-lang="sv">Träning</span></div>
+        <div class="tab-chip">📋 <span data-lang="en">Templates</span><span data-lang="sv">Mallar</span></div>
+        <div class="tab-chip">💪 <span data-lang="en">Exercises</span><span data-lang="sv">Övningar</span></div>
+        <div class="tab-chip">📅 <span data-lang="en">History</span><span data-lang="sv">Historik</span></div>
         <div class="tab-chip">📊 Stats</div>
-        <div class="tab-chip">ℹ️ About</div>
+        <div class="tab-chip">ℹ️ <span data-lang="en">About</span><span data-lang="sv">Om</span></div>
       </div>
     </div>
   </section>
@@ -318,31 +366,40 @@
   <!-- STEP 1: EXERCISES -->
   <section class="section" id="exercises">
     <div class="section-header">
-      <span class="step-badge">Step 1</span>
-      <h2>Build Your Exercise Library</h2>
+      <span class="step-badge"><span data-lang="en">Step 1</span><span data-lang="sv">Steg 1</span></span>
+      <h2 data-lang="en">Build Your Exercise Library</h2>
+      <h2 data-lang="sv">Bygg ditt övningsbibliotek</h2>
     </div>
 
     <div class="card">
-      <h3><span>✨</span> Create an Exercise (Wand / + Button)</h3>
-      <p>Tap the <strong>wand icon</strong> or <strong>+ button</strong> in the Exercises tab to add a custom exercise. Enter the exercise name and select a muscle group — that's it.</p>
+      <h3><span>✨</span> <span data-lang="en">Create an Exercise (Wand / + Button)</span><span data-lang="sv">Skapa en övning (Trollstav / + Knapp)</span></h3>
+      <p data-lang="en">Tap the <strong>wand icon</strong> or <strong>+ button</strong> in the Exercises tab to add a custom exercise. Enter the exercise name and select a muscle group — that's it.</p>
+      <p data-lang="sv">Tryck på <strong>trollstavsikonen</strong> eller <strong>+ knappen</strong> i fliken Övningar för att lägga till en egen övning. Ange övningens namn och välj en muskelgrupp — det är allt.</p>
     </div>
 
     <div class="card">
-      <h3><span>📦</span> Import Default Exercises</h3>
-      <p>Don't want to build from scratch? Tap the wand icon and choose to import a pre-built library of common exercises, available in both:</p>
+      <h3><span>📦</span> <span data-lang="en">Import Default Exercises</span><span data-lang="sv">Importera standardövningar</span></h3>
+      <p data-lang="en">Don't want to build from scratch? Tap the wand icon and choose to import a pre-built library of common exercises, available in both:</p>
+      <p data-lang="sv">Vill du inte börja från noll? Tryck på trollstavsikonen och välj att importera ett färdigt bibliotek med vanliga övningar, tillgängligt på båda:</p>
       <ul>
-        <li>English</li>
-        <li>Swedish</li>
+        <li data-lang="en">English</li>
+        <li data-lang="en">Swedish</li>
+        <li data-lang="sv">Engelska</li>
+        <li data-lang="sv">Svenska</li>
       </ul>
-      <div class="tip"><strong>Tip:</strong> Duplicate detection is built in — importing won't add exercises you already have.</div>
+      <div class="tip" data-lang="en"><strong>Tip:</strong> Duplicate detection is built in — importing won't add exercises you already have.</div>
+      <div class="tip" data-lang="sv"><strong>Tips:</strong> Dubblettdetektering är inbyggd — import lägger inte till övningar du redan har.</div>
     </div>
 
     <div class="card">
-      <h3><span>🗂️</span> Managing Exercises</h3>
+      <h3><span>🗂️</span> <span data-lang="en">Managing Exercises</span><span data-lang="sv">Hantera övningar</span></h3>
       <ul>
-        <li>Exercises are listed alphabetically with their muscle group</li>
-        <li>Swipe left on any exercise to delete it</li>
-        <li>Exercises in active templates or workouts are protected from accidental deletion</li>
+        <li data-lang="en">Exercises are listed alphabetically with their muscle group</li>
+        <li data-lang="en">Swipe left on any exercise to delete it</li>
+        <li data-lang="en">Exercises in active templates or workouts are protected from accidental deletion</li>
+        <li data-lang="sv">Övningar listas alfabetiskt med sin muskelgrupp</li>
+        <li data-lang="sv">Svep åt vänster på en övning för att ta bort den</li>
+        <li data-lang="sv">Övningar som ingår i aktiva mallar eller träningspass är skyddade mot oavsiktlig borttagning</li>
       </ul>
     </div>
   </section>
@@ -350,32 +407,44 @@
   <!-- STEP 2: TEMPLATES -->
   <section class="section" id="templates">
     <div class="section-header">
-      <span class="step-badge">Step 2</span>
-      <h2>Create Workout Templates</h2>
+      <span class="step-badge"><span data-lang="en">Step 2</span><span data-lang="sv">Steg 2</span></span>
+      <h2 data-lang="en">Create Workout Templates</h2>
+      <h2 data-lang="sv">Skapa träningsmallar</h2>
     </div>
 
     <div class="card">
-      <h3><span>📋</span> What is a Template?</h3>
-      <p>A template is a saved workout plan — a named list of exercises you want to perform together. For example: "Push Day", "Leg Day", or "Full Body A".</p>
+      <h3><span>📋</span> <span data-lang="en">What is a Template?</span><span data-lang="sv">Vad är en mall?</span></h3>
+      <p data-lang="en">A template is a saved workout plan — a named list of exercises you want to perform together. For example: "Push Day", "Leg Day", or "Full Body A".</p>
+      <p data-lang="sv">En mall är en sparad träningsplan — en namngiven lista med övningar du vill utföra tillsammans. Till exempel: "Pushdag", "Bendag" eller "Helkropp A".</p>
     </div>
 
     <div class="card">
-      <h3><span>➕</span> Creating a Template</h3>
-      <ol class="sub-steps">
+      <h3><span>➕</span> <span data-lang="en">Creating a Template</span><span data-lang="sv">Skapa en mall</span></h3>
+      <ol class="sub-steps" data-lang="en">
         <li>Go to the <strong>Templates</strong> tab and tap <strong>+</strong></li>
         <li>Give the template a name (e.g., "Push Day")</li>
         <li>Tap the template to open it and add exercises</li>
         <li>Search by name or muscle group to find exercises quickly</li>
         <li>Tap an exercise to add it — a checkmark shows it's included</li>
       </ol>
+      <ol class="sub-steps" data-lang="sv">
+        <li>Gå till fliken <strong>Mallar</strong> och tryck på <strong>+</strong></li>
+        <li>Ge mallen ett namn (t.ex. "Pushdag")</li>
+        <li>Tryck på mallen för att öppna den och lägga till övningar</li>
+        <li>Sök på namn eller muskelgrupp för att hitta övningar snabbt</li>
+        <li>Tryck på en övning för att lägga till den — en bockmarkering visar att den är inkluderad</li>
+      </ol>
     </div>
 
     <div class="card">
-      <h3><span>↕️</span> Reordering &amp; Editing</h3>
+      <h3><span>↕️</span> <span data-lang="en">Reordering &amp; Editing</span><span data-lang="sv">Ändra ordning &amp; redigera</span></h3>
       <ul>
-        <li>Drag and drop exercises within a template to set your preferred order</li>
-        <li>Swipe left on an exercise to remove it from the template</li>
-        <li>When browsing exercises to add, you can see which other templates already include them</li>
+        <li data-lang="en">Drag and drop exercises within a template to set your preferred order</li>
+        <li data-lang="en">Swipe left on an exercise to remove it from the template</li>
+        <li data-lang="en">When browsing exercises to add, you can see which other templates already include them</li>
+        <li data-lang="sv">Dra och släpp övningar i en mall för att ange din föredragna ordning</li>
+        <li data-lang="sv">Svep åt vänster på en övning för att ta bort den från mallen</li>
+        <li data-lang="sv">När du bläddrar bland övningar att lägga till kan du se vilka andra mallar som redan innehåller dem</li>
       </ul>
     </div>
   </section>
@@ -383,48 +452,70 @@
   <!-- STEP 3: WORKOUT -->
   <section class="section" id="workout">
     <div class="section-header">
-      <span class="step-badge">Step 3</span>
-      <h2>Log a Workout</h2>
+      <span class="step-badge"><span data-lang="en">Step 3</span><span data-lang="sv">Steg 3</span></span>
+      <h2 data-lang="en">Log a Workout</h2>
+      <h2 data-lang="sv">Logga ett träningspass</h2>
     </div>
 
     <div class="card">
-      <h3><span>▶️</span> Starting a Workout</h3>
-      <ol class="sub-steps">
+      <h3><span>▶️</span> <span data-lang="en">Starting a Workout</span><span data-lang="sv">Starta ett träningspass</span></h3>
+      <ol class="sub-steps" data-lang="en">
         <li>Go to the <strong>Workouts</strong> tab (or tap <strong>Start Workout</strong> on the home screen)</li>
         <li>Pick a template from the dropdown — you'll see a preview of the exercises</li>
         <li>Tap <strong>Start Workout</strong> to begin</li>
       </ol>
-      <div class="tip"><strong>Tip:</strong> The app automatically records your start time so workout duration is tracked for you.</div>
+      <ol class="sub-steps" data-lang="sv">
+        <li>Gå till fliken <strong>Träning</strong> (eller tryck på <strong>Starta träning</strong> på startskärmen)</li>
+        <li>Välj en mall från rullgardinsmenyn — du får en förhandsvisning av övningarna</li>
+        <li>Tryck på <strong>Starta träning</strong> för att börja</li>
+      </ol>
+      <div class="tip" data-lang="en"><strong>Tip:</strong> The app automatically records your start time so workout duration is tracked for you.</div>
+      <div class="tip" data-lang="sv"><strong>Tips:</strong> Appen registrerar automatiskt din starttid så att träningspassets längd spåras åt dig.</div>
     </div>
 
     <div class="card">
-      <h3><span>📝</span> Logging Sets</h3>
-      <ol class="sub-steps">
+      <h3><span>📝</span> <span data-lang="en">Logging Sets</span><span data-lang="sv">Logga set</span></h3>
+      <ol class="sub-steps" data-lang="en">
         <li>Tap an exercise name to expand it</li>
         <li>Enter <strong>reps</strong> and <strong>weight (kg)</strong> for your set, then tap <strong>Add Set</strong></li>
         <li>Repeat for each set — your total set count is shown at the bottom</li>
         <li>Tap <strong>Edit</strong> next to any logged set to correct a mistake, or swipe to delete it</li>
       </ol>
+      <ol class="sub-steps" data-lang="sv">
+        <li>Tryck på ett övningsnamn för att expandera det</li>
+        <li>Ange <strong>reps</strong> och <strong>vikt (kg)</strong> för ditt set, tryck sedan på <strong>Lägg till set</strong></li>
+        <li>Upprepa för varje set — ditt totala antal set visas längst ner</li>
+        <li>Tryck på <strong>Redigera</strong> bredvid ett loggat set för att korrigera ett misstag, eller svep för att ta bort det</li>
+      </ol>
     </div>
 
     <div class="card">
-      <h3><span>🔁</span> See Your Previous Performance</h3>
-      <p>While in an active workout, each exercise shows the <strong>reps and weight from your last session</strong> for that same exercise — so you always know what to beat.</p>
+      <h3><span>🔁</span> <span data-lang="en">See Your Previous Performance</span><span data-lang="sv">Se din tidigare prestation</span></h3>
+      <p data-lang="en">While in an active workout, each exercise shows the <strong>reps and weight from your last session</strong> for that same exercise — so you always know what to beat.</p>
+      <p data-lang="sv">Under ett aktivt träningspass visar varje övning <strong>reps och vikt från ditt senaste pass</strong> för samma övning — så du alltid vet vad du ska slå.</p>
     </div>
 
     <div class="card">
-      <h3><span>💬</span> Exercise Notes / Comments</h3>
-      <p>Below each exercise you can type a note — technique cues, how it felt, an injury reminder, anything. Notes from your previous session are shown automatically so you can refer back to them.</p>
-      <div class="note"><strong>Note:</strong> Notes are stored per exercise per workout. They'll appear in History and be shown again next time you do the same workout.</div>
+      <h3><span>💬</span> <span data-lang="en">Exercise Notes / Comments</span><span data-lang="sv">Övningsanteckningar / Kommentarer</span></h3>
+      <p data-lang="en">Below each exercise you can type a note — technique cues, how it felt, an injury reminder, anything. Notes from your previous session are shown automatically so you can refer back to them.</p>
+      <p data-lang="sv">Under varje övning kan du skriva en anteckning — teknikpåminnelser, hur det kändes, en skadepåminnelse, vad som helst. Anteckningar från ditt föregående pass visas automatiskt så att du kan hänvisa till dem.</p>
+      <div class="note" data-lang="en"><strong>Note:</strong> Notes are stored per exercise per workout. They'll appear in History and be shown again next time you do the same workout.</div>
+      <div class="note" data-lang="sv"><strong>Obs:</strong> Anteckningar lagras per övning per träningspass. De visas i Historik och visas igen nästa gång du gör samma träningspass.</div>
     </div>
 
     <div class="card">
-      <h3><span>✅</span> Finishing a Workout</h3>
-      <ol class="sub-steps">
+      <h3><span>✅</span> <span data-lang="en">Finishing a Workout</span><span data-lang="sv">Avsluta ett träningspass</span></h3>
+      <ol class="sub-steps" data-lang="en">
         <li>Tap <strong>Finish Workout</strong> when done</li>
         <li>A summary screen shows duration, all exercises, every set, and your notes</li>
         <li>Tap <strong>Done</strong> to save and return to the home screen</li>
         <li>To discard a session, tap <strong>Cancel Workout</strong> — you'll be asked to confirm</li>
+      </ol>
+      <ol class="sub-steps" data-lang="sv">
+        <li>Tryck på <strong>Avsluta träning</strong> när du är klar</li>
+        <li>En sammanfattningsskärm visar varaktighet, alla övningar, varje set och dina anteckningar</li>
+        <li>Tryck på <strong>Klar</strong> för att spara och återgå till startskärmen</li>
+        <li>För att avbryta ett pass, tryck på <strong>Avbryt träning</strong> — du ombeds bekräfta</li>
       </ol>
     </div>
   </section>
@@ -432,17 +523,22 @@
   <!-- STEP 4: HISTORY -->
   <section class="section" id="history">
     <div class="section-header">
-      <span class="step-badge">Step 4</span>
-      <h2>View Your History</h2>
+      <span class="step-badge"><span data-lang="en">Step 4</span><span data-lang="sv">Steg 4</span></span>
+      <h2 data-lang="en">View Your History</h2>
+      <h2 data-lang="sv">Visa din historik</h2>
     </div>
 
     <div class="card">
-      <h3><span>📅</span> Workout History</h3>
-      <p>The <strong>History</strong> tab shows all completed workouts, newest first. Each entry shows the date and total sets logged.</p>
+      <h3><span>📅</span> <span data-lang="en">Workout History</span><span data-lang="sv">Träningshistorik</span></h3>
+      <p data-lang="en">The <strong>History</strong> tab shows all completed workouts, newest first. Each entry shows the date and total sets logged.</p>
+      <p data-lang="sv">Fliken <strong>Historik</strong> visar alla avslutade träningspass, nyast först. Varje post visar datum och totalt antal loggade set.</p>
       <ul>
-        <li>Tap a workout to see the full breakdown — every exercise, every set, and any notes</li>
-        <li>Swipe left on a session to delete it</li>
-        <li>Use the delete-all option to clear the entire history</li>
+        <li data-lang="en">Tap a workout to see the full breakdown — every exercise, every set, and any notes</li>
+        <li data-lang="en">Swipe left on a session to delete it</li>
+        <li data-lang="en">Use the delete-all option to clear the entire history</li>
+        <li data-lang="sv">Tryck på ett träningspass för att se hela nedbrytningen — varje övning, varje set och eventuella anteckningar</li>
+        <li data-lang="sv">Svep åt vänster på ett pass för att ta bort det</li>
+        <li data-lang="sv">Använd alternativet ta bort allt för att rensa hela historiken</li>
       </ul>
     </div>
   </section>
@@ -450,38 +546,41 @@
   <!-- STEP 5: STATS -->
   <section class="section" id="stats">
     <div class="section-header">
-      <span class="step-badge">Step 5</span>
-      <h2>Track Your Stats</h2>
+      <span class="step-badge"><span data-lang="en">Step 5</span><span data-lang="sv">Steg 5</span></span>
+      <h2 data-lang="en">Track Your Stats</h2>
+      <h2 data-lang="sv">Följ din statistik</h2>
     </div>
 
-    <p style="color: var(--muted); font-size: 0.95rem; margin-bottom: 16px;">The <strong>Stats</strong> tab gives you a quick snapshot of your training consistency and volume.</p>
+    <p style="color: var(--muted); font-size: 0.95rem; margin-bottom: 16px;" data-lang="en">The <strong>Stats</strong> tab gives you a quick snapshot of your training consistency and volume.</p>
+    <p style="color: var(--muted); font-size: 0.95rem; margin-bottom: 16px;" data-lang="sv">Fliken <strong>Stats</strong> ger dig en snabb överblick av din träningskonsistens och volym.</p>
 
     <div class="grid-2">
       <div class="stat-card">
         <div class="stat-icon">🏆</div>
-        <div class="stat-label">Total Workouts</div>
-        <div class="stat-desc">Lifetime session count</div>
+        <div class="stat-label"><span data-lang="en">Total Workouts</span><span data-lang="sv">Totala träningspass</span></div>
+        <div class="stat-desc"><span data-lang="en">Lifetime session count</span><span data-lang="sv">Antal pass totalt</span></div>
       </div>
       <div class="stat-card">
         <div class="stat-icon">📆</div>
-        <div class="stat-label">Last 7 Days</div>
-        <div class="stat-desc">Workouts this week</div>
+        <div class="stat-label"><span data-lang="en">Last 7 Days</span><span data-lang="sv">Senaste 7 dagarna</span></div>
+        <div class="stat-desc"><span data-lang="en">Workouts this week</span><span data-lang="sv">Pass den här veckan</span></div>
       </div>
       <div class="stat-card">
         <div class="stat-icon">🗓️</div>
-        <div class="stat-label">Last 30 Days</div>
-        <div class="stat-desc">Monthly activity</div>
+        <div class="stat-label"><span data-lang="en">Last 30 Days</span><span data-lang="sv">Senaste 30 dagarna</span></div>
+        <div class="stat-desc"><span data-lang="en">Monthly activity</span><span data-lang="sv">Månadsaktivitet</span></div>
       </div>
       <div class="stat-card">
         <div class="stat-icon">📈</div>
-        <div class="stat-label">Last 365 Days</div>
-        <div class="stat-desc">Yearly activity</div>
+        <div class="stat-label"><span data-lang="en">Last 365 Days</span><span data-lang="sv">Senaste 365 dagarna</span></div>
+        <div class="stat-desc"><span data-lang="en">Yearly activity</span><span data-lang="sv">Årsaktivitet</span></div>
       </div>
     </div>
 
     <div class="card" style="margin-top: 12px;">
-      <h3><span>🔢</span> Total Sets Completed</h3>
-      <p>Your all-time total number of sets across every workout ever logged.</p>
+      <h3><span>🔢</span> <span data-lang="en">Total Sets Completed</span><span data-lang="sv">Totalt antal set genomförda</span></h3>
+      <p data-lang="en">Your all-time total number of sets across every workout ever logged.</p>
+      <p data-lang="sv">Ditt totala antal set genom alla träningspass du någonsin loggat.</p>
     </div>
   </section>
 
@@ -491,40 +590,51 @@
   <section class="section" id="tips">
     <div class="section-header">
       <span class="icon">💡</span>
-      <h2>Pro Tips</h2>
+      <h2 data-lang="en">Pro Tips</h2>
+      <h2 data-lang="sv">Pro-tips</h2>
     </div>
 
     <div class="card">
-      <h3><span>🚀</span> Getting Started Fast</h3>
+      <h3><span>🚀</span> <span data-lang="en">Getting Started Fast</span><span data-lang="sv">Kom igång snabbt</span></h3>
       <ul>
-        <li>Import the default exercise library (English or Swedish) to skip manual entry</li>
-        <li>Create at least one template before starting a workout</li>
-        <li>You can add more exercises to a template at any time — even between workouts</li>
+        <li data-lang="en">Import the default exercise library (English or Swedish) to skip manual entry</li>
+        <li data-lang="en">Create at least one template before starting a workout</li>
+        <li data-lang="en">You can add more exercises to a template at any time — even between workouts</li>
+        <li data-lang="sv">Importera standardövningsbiblioteket (engelska eller svenska) för att hoppa över manuell inmatning</li>
+        <li data-lang="sv">Skapa minst en mall innan du startar ett träningspass</li>
+        <li data-lang="sv">Du kan lägga till fler övningar i en mall när som helst — även mellan träningspass</li>
       </ul>
     </div>
 
     <div class="card">
-      <h3><span>⚖️</span> Weight Input</h3>
+      <h3><span>⚖️</span> <span data-lang="en">Weight Input</span><span data-lang="sv">Viktinmatning</span></h3>
       <ul>
-        <li>Weight is entered in <strong>kg</strong></li>
-        <li>Decimal values are supported — use either a comma or a period (e.g., 22.5 or 22,5)</li>
+        <li data-lang="en">Weight is entered in <strong>kg</strong></li>
+        <li data-lang="en">Decimal values are supported — use either a comma or a period (e.g., 22.5 or 22,5)</li>
+        <li data-lang="sv">Vikt anges i <strong>kg</strong></li>
+        <li data-lang="sv">Decimalvärden stöds — använd antingen komma eller punkt (t.ex. 22,5 eller 22.5)</li>
       </ul>
     </div>
 
     <div class="card">
-      <h3><span>🔒</span> Data Safety</h3>
+      <h3><span>🔒</span> <span data-lang="en">Data Safety</span><span data-lang="sv">Datasäkerhet</span></h3>
       <ul>
-        <li>Exercises that are part of a template or workout cannot be deleted until removed from those first</li>
-        <li>Cancelling a workout discards all data from that session — a confirmation prompt will always appear first</li>
-        <li>Deleting history or exercises requires a confirmation step</li>
+        <li data-lang="en">Exercises that are part of a template or workout cannot be deleted until removed from those first</li>
+        <li data-lang="en">Cancelling a workout discards all data from that session — a confirmation prompt will always appear first</li>
+        <li data-lang="en">Deleting history or exercises requires a confirmation step</li>
+        <li data-lang="sv">Övningar som är en del av en mall eller ett träningspass kan inte tas bort förrän de tagits bort därifrån</li>
+        <li data-lang="sv">Att avbryta ett träningspass raderar all data från det passet — en bekräftelseprompt visas alltid först</li>
+        <li data-lang="sv">Att ta bort historik eller övningar kräver ett bekräftelsesteg</li>
       </ul>
     </div>
 
     <div class="card">
-      <h3><span>🌍</span> Language Support</h3>
+      <h3><span>🌍</span> <span data-lang="en">Language Support</span><span data-lang="sv">Språkstöd</span></h3>
       <ul>
-        <li>Default exercises are available in both <strong>English</strong> and <strong>Swedish</strong></li>
-        <li>You can import both sets — duplicates are filtered out automatically</li>
+        <li data-lang="en">Default exercises are available in both <strong>English</strong> and <strong>Swedish</strong></li>
+        <li data-lang="en">You can import both sets — duplicates are filtered out automatically</li>
+        <li data-lang="sv">Standardövningar finns på både <strong>engelska</strong> och <strong>svenska</strong></li>
+        <li data-lang="sv">Du kan importera båda uppsättningarna — dubbletter filtreras bort automatiskt</li>
       </ul>
     </div>
   </section>
@@ -534,6 +644,20 @@
 <footer>
   <p>BearStrength &mdash; Built by Björn Sterling</p>
 </footer>
+
+<script>
+  function setLang(lang) {
+    document.body.className = 'lang-' + lang;
+    document.getElementById('btn-en').classList.toggle('active', lang === 'en');
+    document.getElementById('btn-sv').classList.toggle('active', lang === 'sv');
+    document.documentElement.lang = lang;
+    localStorage.setItem('bs-lang', lang);
+  }
+
+  // Restore saved preference
+  const saved = localStorage.getItem('bs-lang');
+  if (saved === 'sv') setLang('sv');
+</script>
 
 </body>
 </html>
