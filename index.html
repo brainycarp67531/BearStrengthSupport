@@ -1,11 +1,349 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>BearStrength - Support</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>BearStrength — Support</title>
+  <style>
+    :root {
+      --bg: #0f0f0f;
+      --surface: #1a1a1a;
+      --surface2: #242424;
+      --border: #2e2e2e;
+      --accent: #e07b39;
+      --accent-dim: #b85e22;
+      --text: #f0f0f0;
+      --muted: #888;
+      --green: #4caf7d;
+      --radius: 12px;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+      font-size: 16px;
+      line-height: 1.6;
+    }
+
+    header {
+      background: var(--surface);
+      border-bottom: 1px solid var(--border);
+      padding: 40px 24px 32px;
+      text-align: center;
+    }
+
+    header .bear { font-size: 56px; margin-bottom: 12px; }
+
+    header h1 {
+      font-size: 2.2rem;
+      font-weight: 800;
+      letter-spacing: -0.5px;
+    }
+
+    header h1 span { color: var(--accent); }
+
+    header p {
+      color: var(--muted);
+      margin-top: 8px;
+      font-size: 1rem;
+    }
+
+    /* Language toggle */
+    .lang-toggle {
+      display: flex;
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      border-radius: 24px;
+      overflow: hidden;
+      flex-shrink: 0;
+    }
+
+    .lang-btn {
+      padding: 6px 14px;
+      font-size: 0.82rem;
+      font-weight: 600;
+      cursor: pointer;
+      border: none;
+      background: transparent;
+      color: var(--muted);
+      letter-spacing: 0.5px;
+      transition: all 0.15s;
+    }
+
+    .lang-btn.active {
+      background: var(--accent);
+      color: #fff;
+    }
+
+    nav {
+      background: var(--surface);
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 6px;
+      padding: 12px 24px;
+      flex-wrap: wrap;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    nav a {
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 0.85rem;
+      padding: 6px 12px;
+      border-radius: 20px;
+      border: 1px solid var(--border);
+      transition: all 0.15s;
+    }
+
+    nav a:hover, nav a:focus {
+      color: var(--text);
+      border-color: var(--accent);
+      background: rgba(224, 123, 57, 0.08);
+    }
+
+    main {
+      max-width: 760px;
+      margin: 0 auto;
+      padding: 48px 24px 80px;
+    }
+
+    .section {
+      margin-bottom: 56px;
+    }
+
+    .section-header {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin-bottom: 24px;
+    }
+
+    .section-header h2 {
+      font-size: 1.5rem;
+      font-weight: 700;
+    }
+
+    .icon { font-size: 1.4rem; }
+
+    /* Link cards */
+    .link-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 20px 24px;
+      margin-bottom: 12px;
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      transition: border-color 0.15s, background 0.15s;
+    }
+
+    .link-card:hover, .link-card:focus {
+      border-color: var(--accent);
+      background: rgba(224, 123, 57, 0.05);
+      outline: none;
+    }
+
+    .link-card-body {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .link-card-icon {
+      font-size: 1.8rem;
+      flex-shrink: 0;
+    }
+
+    .link-card h3 {
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--text);
+      margin-bottom: 4px;
+    }
+
+    .link-card p {
+      font-size: 0.88rem;
+      color: var(--muted);
+    }
+
+    .link-card-arrow {
+      color: var(--accent);
+      font-size: 1.2rem;
+      flex-shrink: 0;
+    }
+
+    /* Info card */
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 20px 24px;
+      margin-bottom: 12px;
+    }
+
+    .card h3 {
+      font-size: 1rem;
+      font-weight: 600;
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .card p {
+      color: #bbb;
+      font-size: 0.95rem;
+    }
+
+    .card a {
+      color: var(--accent);
+      text-decoration: none;
+    }
+
+    .card a:hover { text-decoration: underline; }
+
+    hr.divider {
+      border: none;
+      border-top: 1px solid var(--border);
+      margin: 48px 0;
+    }
+
+    footer {
+      text-align: center;
+      padding: 32px 24px;
+      border-top: 1px solid var(--border);
+      color: var(--muted);
+      font-size: 0.85rem;
+    }
+
+    @media (max-width: 540px) {
+      .link-card { padding: 16px 18px; }
+    }
+
+    /* Language visibility */
+    [data-lang] { display: none; }
+    body.lang-en [data-lang="en"] { display: revert; }
+    body.lang-sv [data-lang="sv"] { display: revert; }
+
+    span[data-lang] { display: none; }
+    body.lang-en span[data-lang="en"] { display: inline; }
+    body.lang-sv span[data-lang="sv"] { display: inline; }
+  </style>
 </head>
-<body>
-  <h1>BearStrength Support</h1>
-  <p>Welcome! If you need help or have questions, please contact us.</p>
-  <p>Email: <a href="mailto:bjorn.sterling@gmail.com">bjorn.sterling@gmail.com</a></p>
+<body class="lang-en">
+
+<header>
+  <div class="bear">🐻</div>
+  <h1>Bear<span>Strength</span></h1>
+  <p data-lang="en">Support &amp; Resources</p>
+  <p data-lang="sv">Support &amp; Resurser</p>
+</header>
+
+<nav>
+  <a href="#resources"><span data-lang="en">Resources</span><span data-lang="sv">Resurser</span></a>
+  <a href="#contact"><span data-lang="en">Contact</span><span data-lang="sv">Kontakt</span></a>
+  <div class="lang-toggle">
+    <button class="lang-btn active" id="btn-en" onclick="setLang('en')">EN</button>
+    <button class="lang-btn" id="btn-sv" onclick="setLang('sv')">SV</button>
+  </div>
+</nav>
+
+<main>
+
+  <!-- RESOURCES -->
+  <section class="section" id="resources">
+    <div class="section-header">
+      <span class="icon">📚</span>
+      <h2 data-lang="en">Resources</h2>
+      <h2 data-lang="sv">Resurser</h2>
+    </div>
+
+    <a class="link-card" href="instruction.html">
+      <div class="link-card-body">
+        <div class="link-card-icon">📖</div>
+        <div>
+          <h3><span data-lang="en">How to Use BearStrength</span><span data-lang="sv">Hur man använder BearStrength</span></h3>
+          <p data-lang="en">Step-by-step guide to exercises, templates, logging workouts, history &amp; stats.</p>
+          <p data-lang="sv">Steg-för-steg-guide till övningar, mallar, loggning av träningspass, historik och statistik.</p>
+        </div>
+      </div>
+      <div class="link-card-arrow">›</div>
+    </a>
+
+    <a class="link-card" href="TermsAndCondition.html">
+      <div class="link-card-body">
+        <div class="link-card-icon">📄</div>
+        <div>
+          <h3><span data-lang="en">Terms &amp; Conditions</span><span data-lang="sv">Användarvillkor</span></h3>
+          <p data-lang="en">The terms governing your use of the BearStrength app.</p>
+          <p data-lang="sv">Villkoren som gäller för din användning av BearStrength-appen.</p>
+        </div>
+      </div>
+      <div class="link-card-arrow">›</div>
+    </a>
+
+    <a class="link-card" href="privacy.html">
+      <div class="link-card-body">
+        <div class="link-card-icon">🔒</div>
+        <div>
+          <h3><span data-lang="en">Privacy Policy</span><span data-lang="sv">Integritetspolicy</span></h3>
+          <p data-lang="en">How BearStrength handles and protects your data.</p>
+          <p data-lang="sv">Hur BearStrength hanterar och skyddar din data.</p>
+        </div>
+      </div>
+      <div class="link-card-arrow">›</div>
+    </a>
+  </section>
+
+  <hr class="divider" />
+
+  <!-- CONTACT -->
+  <section class="section" id="contact">
+    <div class="section-header">
+      <span class="icon">✉️</span>
+      <h2 data-lang="en">Contact &amp; Support</h2>
+      <h2 data-lang="sv">Kontakt &amp; Support</h2>
+    </div>
+
+    <div class="card">
+      <h3><span>💬</span> <span data-lang="en">Get in Touch</span><span data-lang="sv">Kontakta oss</span></h3>
+      <p data-lang="en">Have a question, found a bug, or want to share feedback? Reach out by email and we'll get back to you as soon as possible.</p>
+      <p data-lang="sv">Har du en fråga, hittat en bugg eller vill dela feedback? Kontakta oss via e-post så återkommer vi så snart som möjligt.</p>
+      <p style="margin-top: 12px;">
+        <a href="mailto:bjorn.sterling@gmail.com">bjorn.sterling@gmail.com</a>
+      </p>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <p>BearStrength &mdash; Built by Björn Sterling</p>
+</footer>
+
+<script>
+  function setLang(lang) {
+    document.body.className = 'lang-' + lang;
+    document.getElementById('btn-en').classList.toggle('active', lang === 'en');
+    document.getElementById('btn-sv').classList.toggle('active', lang === 'sv');
+    document.documentElement.lang = lang;
+    localStorage.setItem('bs-lang', lang);
+  }
+
+  // Restore saved preference
+  const saved = localStorage.getItem('bs-lang');
+  if (saved === 'sv') setLang('sv');
+</script>
+
 </body>
 </html>
