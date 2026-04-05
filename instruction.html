@@ -1,0 +1,539 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>BearStrength — How to Use</title>
+  <style>
+    :root {
+      --bg: #0f0f0f;
+      --surface: #1a1a1a;
+      --surface2: #242424;
+      --border: #2e2e2e;
+      --accent: #e07b39;
+      --accent-dim: #b85e22;
+      --text: #f0f0f0;
+      --muted: #888;
+      --green: #4caf7d;
+      --radius: 12px;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+      font-size: 16px;
+      line-height: 1.6;
+    }
+
+    header {
+      background: var(--surface);
+      border-bottom: 1px solid var(--border);
+      padding: 40px 24px 32px;
+      text-align: center;
+    }
+
+    header .bear { font-size: 56px; margin-bottom: 12px; }
+
+    header h1 {
+      font-size: 2.2rem;
+      font-weight: 800;
+      letter-spacing: -0.5px;
+    }
+
+    header h1 span { color: var(--accent); }
+
+    header p {
+      color: var(--muted);
+      margin-top: 8px;
+      font-size: 1rem;
+    }
+
+    nav {
+      background: var(--surface);
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      justify-content: center;
+      gap: 6px;
+      padding: 12px 24px;
+      flex-wrap: wrap;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    nav a {
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 0.85rem;
+      padding: 6px 12px;
+      border-radius: 20px;
+      border: 1px solid var(--border);
+      transition: all 0.15s;
+    }
+
+    nav a:hover {
+      color: var(--text);
+      border-color: var(--accent);
+      background: rgba(224, 123, 57, 0.08);
+    }
+
+    main {
+      max-width: 760px;
+      margin: 0 auto;
+      padding: 48px 24px 80px;
+    }
+
+    .section {
+      margin-bottom: 56px;
+    }
+
+    .section-header {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin-bottom: 24px;
+    }
+
+    .step-badge {
+      background: var(--accent);
+      color: #fff;
+      font-size: 0.75rem;
+      font-weight: 700;
+      padding: 4px 10px;
+      border-radius: 20px;
+      white-space: nowrap;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+    }
+
+    .section-header h2 {
+      font-size: 1.5rem;
+      font-weight: 700;
+    }
+
+    .icon { font-size: 1.4rem; }
+
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 20px 24px;
+      margin-bottom: 12px;
+    }
+
+    .card h3 {
+      font-size: 1rem;
+      font-weight: 600;
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .card p, .card li {
+      color: #bbb;
+      font-size: 0.95rem;
+    }
+
+    .card ul {
+      list-style: none;
+      padding: 0;
+    }
+
+    .card ul li {
+      padding: 5px 0;
+      padding-left: 20px;
+      position: relative;
+    }
+
+    .card ul li::before {
+      content: "–";
+      position: absolute;
+      left: 0;
+      color: var(--accent);
+    }
+
+    .tip {
+      background: rgba(76, 175, 125, 0.08);
+      border: 1px solid rgba(76, 175, 125, 0.25);
+      border-radius: var(--radius);
+      padding: 14px 18px;
+      margin-top: 12px;
+      font-size: 0.9rem;
+      color: #a0d8b8;
+    }
+
+    .tip strong { color: var(--green); }
+
+    .note {
+      background: rgba(224, 123, 57, 0.07);
+      border: 1px solid rgba(224, 123, 57, 0.2);
+      border-radius: var(--radius);
+      padding: 14px 18px;
+      margin-top: 12px;
+      font-size: 0.9rem;
+      color: #d9aa82;
+    }
+
+    .note strong { color: var(--accent); }
+
+    .sub-steps {
+      counter-reset: sub;
+      list-style: none;
+      padding: 0;
+      margin-top: 12px;
+    }
+
+    .sub-steps li {
+      counter-increment: sub;
+      padding: 10px 0 10px 40px;
+      position: relative;
+      border-bottom: 1px solid var(--border);
+      font-size: 0.95rem;
+      color: #bbb;
+    }
+
+    .sub-steps li:last-child { border-bottom: none; }
+
+    .sub-steps li::before {
+      content: counter(sub);
+      position: absolute;
+      left: 0;
+      top: 10px;
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      color: var(--accent);
+      font-weight: 700;
+      font-size: 0.75rem;
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      line-height: 24px;
+    }
+
+    .sub-steps li strong { color: var(--text); }
+
+    .grid-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+
+    @media (max-width: 540px) {
+      .grid-2 { grid-template-columns: 1fr; }
+    }
+
+    .stat-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 16px 20px;
+      text-align: center;
+    }
+
+    .stat-card .stat-icon { font-size: 1.6rem; margin-bottom: 6px; }
+    .stat-card .stat-label { font-size: 0.82rem; color: var(--muted); margin-bottom: 4px; }
+    .stat-card .stat-desc { font-size: 0.9rem; color: #ccc; font-weight: 500; }
+
+    hr.divider {
+      border: none;
+      border-top: 1px solid var(--border);
+      margin: 56px 0;
+    }
+
+    footer {
+      text-align: center;
+      padding: 32px 24px;
+      border-top: 1px solid var(--border);
+      color: var(--muted);
+      font-size: 0.85rem;
+    }
+
+    .tab-row {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-top: 12px;
+    }
+
+    .tab-chip {
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 6px 12px;
+      font-size: 0.82rem;
+      color: #ccc;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="bear">🐻</div>
+  <h1>Bear<span>Strength</span></h1>
+  <p>Your simple, no-nonsense strength training tracker</p>
+</header>
+
+<nav>
+  <a href="#exercises">Exercises</a>
+  <a href="#templates">Templates</a>
+  <a href="#workout">Workout</a>
+  <a href="#history">History</a>
+  <a href="#stats">Stats</a>
+  <a href="#tips">Tips</a>
+</nav>
+
+<main>
+
+  <!-- OVERVIEW -->
+  <section class="section" id="overview">
+    <div class="section-header">
+      <span class="icon">📱</span>
+      <h2>App Overview</h2>
+    </div>
+    <div class="card">
+      <p>BearStrength is built around a simple three-step workflow: <strong>build your exercise library</strong>, <strong>create workout templates</strong>, and <strong>log your sessions</strong>. Everything else — history, progress data, and stats — is generated automatically.</p>
+      <div class="tab-row">
+        <div class="tab-chip">🏠 Home</div>
+        <div class="tab-chip">🏋️ Workouts</div>
+        <div class="tab-chip">📋 Templates</div>
+        <div class="tab-chip">💪 Exercises</div>
+        <div class="tab-chip">📅 History</div>
+        <div class="tab-chip">📊 Stats</div>
+        <div class="tab-chip">ℹ️ About</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- STEP 1: EXERCISES -->
+  <section class="section" id="exercises">
+    <div class="section-header">
+      <span class="step-badge">Step 1</span>
+      <h2>Build Your Exercise Library</h2>
+    </div>
+
+    <div class="card">
+      <h3><span>✨</span> Create an Exercise (Wand / + Button)</h3>
+      <p>Tap the <strong>wand icon</strong> or <strong>+ button</strong> in the Exercises tab to add a custom exercise. Enter the exercise name and select a muscle group — that's it.</p>
+    </div>
+
+    <div class="card">
+      <h3><span>📦</span> Import Default Exercises</h3>
+      <p>Don't want to build from scratch? Tap the wand icon and choose to import a pre-built library of common exercises, available in both:</p>
+      <ul>
+        <li>English</li>
+        <li>Swedish</li>
+      </ul>
+      <div class="tip"><strong>Tip:</strong> Duplicate detection is built in — importing won't add exercises you already have.</div>
+    </div>
+
+    <div class="card">
+      <h3><span>🗂️</span> Managing Exercises</h3>
+      <ul>
+        <li>Exercises are listed alphabetically with their muscle group</li>
+        <li>Swipe left on any exercise to delete it</li>
+        <li>Exercises in active templates or workouts are protected from accidental deletion</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- STEP 2: TEMPLATES -->
+  <section class="section" id="templates">
+    <div class="section-header">
+      <span class="step-badge">Step 2</span>
+      <h2>Create Workout Templates</h2>
+    </div>
+
+    <div class="card">
+      <h3><span>📋</span> What is a Template?</h3>
+      <p>A template is a saved workout plan — a named list of exercises you want to perform together. For example: "Push Day", "Leg Day", or "Full Body A".</p>
+    </div>
+
+    <div class="card">
+      <h3><span>➕</span> Creating a Template</h3>
+      <ol class="sub-steps">
+        <li>Go to the <strong>Templates</strong> tab and tap <strong>+</strong></li>
+        <li>Give the template a name (e.g., "Push Day")</li>
+        <li>Tap the template to open it and add exercises</li>
+        <li>Search by name or muscle group to find exercises quickly</li>
+        <li>Tap an exercise to add it — a checkmark shows it's included</li>
+      </ol>
+    </div>
+
+    <div class="card">
+      <h3><span>↕️</span> Reordering &amp; Editing</h3>
+      <ul>
+        <li>Drag and drop exercises within a template to set your preferred order</li>
+        <li>Swipe left on an exercise to remove it from the template</li>
+        <li>When browsing exercises to add, you can see which other templates already include them</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- STEP 3: WORKOUT -->
+  <section class="section" id="workout">
+    <div class="section-header">
+      <span class="step-badge">Step 3</span>
+      <h2>Log a Workout</h2>
+    </div>
+
+    <div class="card">
+      <h3><span>▶️</span> Starting a Workout</h3>
+      <ol class="sub-steps">
+        <li>Go to the <strong>Workouts</strong> tab (or tap <strong>Start Workout</strong> on the home screen)</li>
+        <li>Pick a template from the dropdown — you'll see a preview of the exercises</li>
+        <li>Tap <strong>Start Workout</strong> to begin</li>
+      </ol>
+      <div class="tip"><strong>Tip:</strong> The app automatically records your start time so workout duration is tracked for you.</div>
+    </div>
+
+    <div class="card">
+      <h3><span>📝</span> Logging Sets</h3>
+      <ol class="sub-steps">
+        <li>Tap an exercise name to expand it</li>
+        <li>Enter <strong>reps</strong> and <strong>weight (kg)</strong> for your set, then tap <strong>Add Set</strong></li>
+        <li>Repeat for each set — your total set count is shown at the bottom</li>
+        <li>Tap <strong>Edit</strong> next to any logged set to correct a mistake, or swipe to delete it</li>
+      </ol>
+    </div>
+
+    <div class="card">
+      <h3><span>🔁</span> See Your Previous Performance</h3>
+      <p>While in an active workout, each exercise shows the <strong>reps and weight from your last session</strong> for that same exercise — so you always know what to beat.</p>
+    </div>
+
+    <div class="card">
+      <h3><span>💬</span> Exercise Notes / Comments</h3>
+      <p>Below each exercise you can type a note — technique cues, how it felt, an injury reminder, anything. Notes from your previous session are shown automatically so you can refer back to them.</p>
+      <div class="note"><strong>Note:</strong> Notes are stored per exercise per workout. They'll appear in History and be shown again next time you do the same workout.</div>
+    </div>
+
+    <div class="card">
+      <h3><span>✅</span> Finishing a Workout</h3>
+      <ol class="sub-steps">
+        <li>Tap <strong>Finish Workout</strong> when done</li>
+        <li>A summary screen shows duration, all exercises, every set, and your notes</li>
+        <li>Tap <strong>Done</strong> to save and return to the home screen</li>
+        <li>To discard a session, tap <strong>Cancel Workout</strong> — you'll be asked to confirm</li>
+      </ol>
+    </div>
+  </section>
+
+  <!-- STEP 4: HISTORY -->
+  <section class="section" id="history">
+    <div class="section-header">
+      <span class="step-badge">Step 4</span>
+      <h2>View Your History</h2>
+    </div>
+
+    <div class="card">
+      <h3><span>📅</span> Workout History</h3>
+      <p>The <strong>History</strong> tab shows all completed workouts, newest first. Each entry shows the date and total sets logged.</p>
+      <ul>
+        <li>Tap a workout to see the full breakdown — every exercise, every set, and any notes</li>
+        <li>Swipe left on a session to delete it</li>
+        <li>Use the delete-all option to clear the entire history</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- STEP 5: STATS -->
+  <section class="section" id="stats">
+    <div class="section-header">
+      <span class="step-badge">Step 5</span>
+      <h2>Track Your Stats</h2>
+    </div>
+
+    <p style="color: var(--muted); font-size: 0.95rem; margin-bottom: 16px;">The <strong>Stats</strong> tab gives you a quick snapshot of your training consistency and volume.</p>
+
+    <div class="grid-2">
+      <div class="stat-card">
+        <div class="stat-icon">🏆</div>
+        <div class="stat-label">Total Workouts</div>
+        <div class="stat-desc">Lifetime session count</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon">📆</div>
+        <div class="stat-label">Last 7 Days</div>
+        <div class="stat-desc">Workouts this week</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon">🗓️</div>
+        <div class="stat-label">Last 30 Days</div>
+        <div class="stat-desc">Monthly activity</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon">📈</div>
+        <div class="stat-label">Last 365 Days</div>
+        <div class="stat-desc">Yearly activity</div>
+      </div>
+    </div>
+
+    <div class="card" style="margin-top: 12px;">
+      <h3><span>🔢</span> Total Sets Completed</h3>
+      <p>Your all-time total number of sets across every workout ever logged.</p>
+    </div>
+  </section>
+
+  <hr class="divider" />
+
+  <!-- TIPS -->
+  <section class="section" id="tips">
+    <div class="section-header">
+      <span class="icon">💡</span>
+      <h2>Pro Tips</h2>
+    </div>
+
+    <div class="card">
+      <h3><span>🚀</span> Getting Started Fast</h3>
+      <ul>
+        <li>Import the default exercise library (English or Swedish) to skip manual entry</li>
+        <li>Create at least one template before starting a workout</li>
+        <li>You can add more exercises to a template at any time — even between workouts</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <h3><span>⚖️</span> Weight Input</h3>
+      <ul>
+        <li>Weight is entered in <strong>kg</strong></li>
+        <li>Decimal values are supported — use either a comma or a period (e.g., 22.5 or 22,5)</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <h3><span>🔒</span> Data Safety</h3>
+      <ul>
+        <li>Exercises that are part of a template or workout cannot be deleted until removed from those first</li>
+        <li>Cancelling a workout discards all data from that session — a confirmation prompt will always appear first</li>
+        <li>Deleting history or exercises requires a confirmation step</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <h3><span>🌍</span> Language Support</h3>
+      <ul>
+        <li>Default exercises are available in both <strong>English</strong> and <strong>Swedish</strong></li>
+        <li>You can import both sets — duplicates are filtered out automatically</li>
+      </ul>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <p>BearStrength &mdash; Built by Björn Sterling</p>
+</footer>
+
+</body>
+</html>
