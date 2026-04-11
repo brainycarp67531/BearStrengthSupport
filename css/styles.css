@@ -6,8 +6,10 @@
   --surface: #1a1a1a;
   --surface2: #242424;
   --border: #2e2e2e;
-  --accent: #e07b39;
-  --accent-dim: #b85e22;
+  /* --accent: #e07b39; */
+    /* --accent-dim: #b85e22; */
+  --accent: #073979;
+  --accent-dim: #3979e0;
   --text: #f0f0f0;
   --muted: #888;
   --green: #4caf7d;
